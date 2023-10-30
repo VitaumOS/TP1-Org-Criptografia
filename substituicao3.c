@@ -256,8 +256,8 @@ void tradutor_chaves(char* resultado, char* chave, char* cifra, int tamanhoCifra
     
     for (int i = 0; i < 26; i++){
         for(int j = 0; j < tamanhoCifra; j++){
-            if((cifra[j] == cifra[i]) && (troca[j] == 0)){
-                resultado[j] = ALFABETO[i];
+            if((cifra[j] == ALFABETO[i]) && (troca[j] == 0)){
+                resultado[j] = chave[i];
                 troca[j] = 1;
             }
         }
