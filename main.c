@@ -17,8 +17,9 @@ Quadgrams* coloca_quad(int, Quadgrams*);
 
 int main() {
     char quad_selecionado[5], frase[] = "XIWPHQTTCHPXSIWPIPHIGDCDBNXHPWJBQAXCVPCSRWPGPRITGQJXASXCVTMETGXTCRTIWTGTXHETGWPEHCDQTIITGSTBDCHIGPIXDCDUIWTUDAANDUWJBPCRDCRTXIHIWPCIWXHSXHIPCIXBPVTDUDJGIXCNLDGASIDBTXIJCSTGHRDGTHDJGGTHEDCHXQXAXINIDSTPABDGTZXCSANLXIWDCTPCDIWTGPCSIDEGTHTGKTPCSRWTGXHWIWTEPATQAJTSDIIWTDCANWDBTLTWPKTTKTGZCDLC";
-    float afinidade, soma = 0.0, valor_quad;
+    float afinidade, soma = 0.0, valor_quad, maiorAfini=-9999;
     int len = strlen(frase);
+    char *fraseoriginal=malloc(len*sizeof(char));
     int n=cont_quad();
     Quadgrams *quadgrams=malloc(n*sizeof(Quadgrams));
 
@@ -28,7 +29,7 @@ int main() {
         for (int j = 0; j < len; j++) {
             frase[j] = ((frase[j] - 'A' + 1) % 26) + 'A';
         }
-        printf("%s ||", frase);
+
 
         /*##################*/
         for (int x = 0; x + 4 <= len; x++) {
@@ -41,10 +42,16 @@ int main() {
         }
         afinidade = soma;
         soma = 0.0;
-        printf("Afinidade: %f\n", afinidade);
+
+
+        if(afinidade>maiorAfini){
+            maiorAfini=afinidade;
+            strcpy(fraseoriginal,frase);
+        }
         /*###################*/
-    
     }
+
+    printf("Frase Traduzida: %s\nAfinidade:%.1f", fraseoriginal, maiorAfini);
     return 0;
 }
 
