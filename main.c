@@ -24,7 +24,7 @@ int main() {
     Quadgrams *quadgrams=malloc(n*sizeof(Quadgrams));
 
     quadgrams=coloca_quad(n, quadgrams);
-
+    printf("Aguarde...\n");
     for (int i = 0; i < 26; i++) {
         for (int j = 0; j < len; j++) {
             frase[j] = ((frase[j] - 'A' + 1) % 26) + 'A';
