@@ -17,7 +17,7 @@ int main() {
     tamanho_cifra = traducao_binaria(arquivo_binario);
     fclose(arquivo_binario);
 
-    char *frase=malloc(tamanho_cifra*sizeof(char));
+    char *frase=malloc((tamanho_cifra-1)*sizeof(char));
 
     FILE * arquivo = NULL;
     int i=0;
@@ -31,7 +31,7 @@ int main() {
         }
     }
     fclose(arquivo);
-    int len = tamanho_cifra;
+    int len = tamanho_cifra-1;
     char *fraseoriginal=malloc(len*sizeof(char));
 
 
@@ -63,7 +63,12 @@ int main() {
         /*###################*/
     }
 
-    printf("Frase Traduzida: %s\nAfinidade:%.1f", fraseoriginal, maiorAfini);
+    
+
+    printf("Frase Traduzida: %s\nAfinidade:%.1f\n", fraseoriginal, maiorAfini);
+    free(quadgrams);
+    free(frase);
+    free(fraseoriginal);
     return 0;
 }
 
