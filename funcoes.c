@@ -1,69 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <time.h>
 #include "funcoes.h"
 
-#define TOTAL 8448255824.0
 const char ALFABETO[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-typedef struct {
-    char quadgrams[5];
-    int afinidade;
-}Quadgrams;
-
-
-// Funções usadas para calcular os quadgrams
-
-Quadgrams* inicializa_quadgrams(int n, Quadgrams *quad); // Antigo coloca_quad
-float afinidade_quad(char *quad, Quadgrams *quadgrams, int n);
-float qualidade_cifra(int tamanhoCifra, char* fraseCifrada, Quadgrams *quadgrams, int quads); // Antigo afinidade_total
-float quantidade_quads();    // Antigo cont_quad
-
-// Funções para a conversão binário para ASCII
-
-
-char binParaChar(char *bin);
-int binParaInt(char *bin);
-int conta_Espacos(FILE *arquivo_binario);    // Antigo Grabber()
-int traducao_binaria(FILE *arquivo_binario);
-
-// Funções usadas para descriptografar a cifra de substituição
-
-float valor_zero_a_umX();
-float valor_zero_a_umY();
-void frequencia_global(float* frequencia); // Antigo inicializaFrequencia
-void frase_Inicial(char* frase, int tamanhoFrase);
-void primeira_chave(char* chave);
-void tradutor_chaves(char* resultado, char* chave, char* cifra, int tamanhoCifra);
-void escolha_aleatoria(float* frequencias, int* y, int* x, int par);
-void normalizador(float* frequencia_percentual, float* frequencia_Traducao, float* frequencia_alfabeto);
-void pequena_mudanca(char* chave, float* frequencia_Traducao, float* frequencia_alfabeto);
-void calcula_frequencia(float* frequencia, char* cifra, int tamanho);
-void descriptografia();
-
-int main(){
-    char nome_arquivo[20];
-    int tamanho_cifra;
-
-    FILE* arquivo_binario = NULL;
-    
-    do{
-        printf("Digite o nome do arquivo: ");
-        scanf("%s", nome_arquivo);
-        arquivo_binario = fopen(nome_arquivo, "r");
-    } while(arquivo_binario == NULL);
-    
-    tamanho_cifra = traducao_binaria(arquivo_binario);
-
-    fclose(arquivo_binario);
-
-    descriptografia(tamanho_cifra);
-
-    return 0;
-}
-
 Quadgrams* inicializa_quadgrams(int quantidade_quad, Quadgrams* quadgrams){
 
     FILE *arquivo = fopen("quadgrams.txt", "r");
@@ -126,6 +63,31 @@ char binParaChar(char *bin){
         potencia *= 2;
     }
     return (char) saida;
+}
+
+int cont_quad(){
+
+    int num=0, a;
+    char q[5];
+    FILE *arq=fopen("quadgrams.txt", "r");
+    while(!feof(arq)){
+
+        fscanf(arq, "%5s %d", q, &a);
+        num++;
+    }
+    fclose(arq);
+    return num;
+}
+
+Quadgrams* coloca_quad(int n, Quadgrams *quad){
+
+    FILE *arq=fopen("quadgrams.txt", "r");
+    for(int i=0; i<n; i++)
+        fscanf(arq, "%5s %d", quad[i].quadgrams, &quad[i].afinidade);
+
+    fclose(arq);
+
+    return quad;
 }
 
 int binParaInt(char *bin){
